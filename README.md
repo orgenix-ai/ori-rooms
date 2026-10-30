@@ -39,8 +39,8 @@ Studio's checks on what Muse drew run locally in this repo: `readDrawnLooks` in 
 
 Needs Node 22 or later.
 
-1. Sign in at https://alpha.orgenix.ai with your judge invite.
-2. Create a key at https://alpha.orgenix.ai/judge/keys. It's shown once; keep it private.
+1. Sign up at https://alpha.orgenix.ai with any email.
+2. Create a key at https://alpha.orgenix.ai/judge/keys with the invite code from your judging invite. The key is shown once; keep it private.
 3. Install and run:
 
 ```bash
