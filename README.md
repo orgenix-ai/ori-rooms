@@ -19,6 +19,7 @@ What stays private is what makes the rooms work well: every prompt, every scorin
 - the Muse route and prices (`src/muse/`);
 - the Muse relay with its Muse Image call (`src/build/muse-relay.ts`, merged before kickoff as part of Ori's Muse groundwork);
 - the Responses relay it builds on;
+- the Muse Code driver of Ori's builds (`src/build/muse-agent.ts`, `src/build/usage.ts`, part of the Muse Code runtime merged before kickoff): each build lane as a `muse exec` session, its events mapped to Ori's, its tokens counted per model. The build orchestrator that drives the lanes, and its briefs, stay private;
 - Studio's look checks, look math and design tokens (`src/studio/`);
 - Direction's reply protocol (`src/direction/`).
 
@@ -29,7 +30,7 @@ What stays private is what makes the rooms work well: every prompt, every scorin
 | **muse-wonder-1.0**, chat on the Meta Model API (Responses API) | `src/muse/routes.ts` (the `meta` route), `src/cli.ts` → `complete("direction.opening")`, `complete("studio.looks")`, `complete("studio.looksRepair")` | Ori's Design Master in Direction and Studio; Ori's build agents |
 | **muse-spark-1.3** | `src/muse/routes.ts`; Ori's picture guard classifier (via `policy("picture-guard")`) | The small model that reads every picture prompt before Muse Image sees it |
 | **muse-image-1.0**, `POST /v1/images/generations` | `src/build/muse-relay.ts`: `imageRefusal` (one picture, allowed sizes, base64), `withSafetySuffix`, the per-build cap, per-picture metering in `createRelay` | Photos in the apps Ori builds; logos and icons stay SVG |
-| **Muse Code** (the coding agent) | `src/build/muse-relay.ts` is the only door a Muse Code build has to Meta: it holds the key, allows only the build's models, and meters tokens per model | Ori's builds run Muse Code in a sandbox; this relay is how they reach Muse |
+| **Muse Code** (the coding agent) | `src/build/muse-agent.ts` runs each build lane as `muse exec --json` on its own session, pointed at the relay, and maps the Muse Session Protocol's events to Ori's; `src/build/muse-relay.ts` is the only door a Muse Code build has to Meta: it holds the key, allows only the build's models, and meters tokens per model | Ori's builds run Muse Code in a sandbox; this relay is how they reach Muse |
 | **Prices** | `src/muse/model-pricing.ts` (`muse-wonder-1.0`, `muse-spark-1.3`) | Every Muse call is priced from its token usage |
 
 Studio's checks on what Muse drew run locally in this repo: `readDrawnLooks` in `src/studio/server/design-studio-looks.ts`, accent contrast, looks that differ enough, and fonts from the allowed list.
