@@ -19,7 +19,7 @@ export async function judgePicturePrompt(
   _classifier: PictureClassifier | undefined,
 ): Promise<{ verdict: PictureVerdict; source: "guard" | "classifier" }> {
   try {
-    const verdict = await oriSeamFromEnv().policy("picture-guard", { prompt });
+    const verdict = await oriSeamFromEnv().policy("picture-guard", prompt);
     return { verdict: verdict.pass ? { allowed: true } : { allowed: false, category: "other" }, source: "guard" };
   } catch {
     return { verdict: { allowed: false, category: "classifier_unavailable" }, source: "guard" };

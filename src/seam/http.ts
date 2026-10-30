@@ -36,7 +36,8 @@ export function oriSeamOverHttp(options: SeamHttpOptions): OriSecrets {
     return body as T;
   }
   return {
-    complete: (key, vars, callOptions) => call<Completion>("/api/seam/complete", { method: "POST", body: { key, vars, ...(callOptions?.model ? { model: callOptions.model } : {}) } }),
+    complete: (key, vars, callOptions) =>
+      call<Completion>("/api/seam/complete", { method: "POST", body: { key, vars, ...(callOptions?.model ? { options: { model: callOptions.model } } : {}) } }),
     policy: (key, input) => call<PolicyVerdict>("/api/seam/policy", { method: "POST", body: { key, input } }),
     next: (projectId) => call<NextStep>(`/api/seam/next?projectId=${encodeURIComponent(projectId)}`, { method: "GET" }),
   };
