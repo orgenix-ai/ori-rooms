@@ -1,0 +1,58 @@
+[
+  {
+    "from": "agents/src/rooms/ori-seam.ts",
+    "to": "src/seam/ori-seam.ts"
+  },
+  {
+    "from": "agents/src/rooms/muse/routes.ts",
+    "to": "src/muse/routes.ts"
+  },
+  {
+    "from": "agents/src/model-pricing.ts",
+    "to": "src/muse/model-pricing.ts"
+  },
+  {
+    "from": "sandbox/host/muse-relay.ts",
+    "to": "src/build/muse-relay.ts"
+  },
+  {
+    "from": "sandbox/host/openai-relay.ts",
+    "to": "src/build/openai-relay.ts"
+  },
+  {
+    "from": "apps/web/src/lib/design-tokens.ts",
+    "to": "src/studio/design-tokens.ts"
+  },
+  {
+    "from": "apps/web/src/lib/studio-looks.ts",
+    "to": "src/studio/studio-looks.ts"
+  },
+  {
+    "from": "apps/web/src/lib/server/design-studio-looks.ts",
+    "to": "src/studio/server/design-studio-looks.ts"
+  },
+  {
+    "from": "apps/web/src/lib/server/direction-turn.ts",
+    "to": "src/direction/direction-turn.ts"
+  },
+  {
+    "from": "ori-rooms/public/src/seam/http.ts",
+    "to": "src/seam/http.ts"
+  },
+  {
+    "from": "ori-rooms/public/src/build/picture-guard.ts",
+    "to": "src/build/picture-guard.ts"
+  },
+  {
+    "from": "ori-rooms/public/src/studio/server/system-issues.ts",
+    "to": "src/studio/server/system-issues.ts"
+  },
+  {
+    "from": "ori-rooms/public/package.json",
+    "to": "package.json"
+  },
+  {
+    "from": "ori-rooms/public/tsconfig.json",
+    "to": "tsconfig.json"
+  }
+]

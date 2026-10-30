@@ -1,0 +1,21 @@
+{
+  "name": "ori-rooms",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Ori's room code (Direction, Studio, Build) and its Meta Muse layer, as Ori runs it. Prompts and rules stay on Ori's server.",
+  "license": "SEE LICENSE IN LICENSE",
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "tsx src/cli.ts",
+    "typecheck": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2"
+  }
+}
