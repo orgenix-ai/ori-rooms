@@ -2,14 +2,13 @@
  * `npm start [idea]`: one app idea through two of Ori's rooms on Meta's Muse models, then the picture guard.
  *
  *   1. Direction: Ori's Design Master opens the conversation (muse-wonder-1.0, prompt on Ori's server).
- *   2. Studio: the Master draws three looks for the app (muse-wonder-1.0); Ori's own look checks (studio/) run here,
- *      and looks they send back get Ori's repair turn.
+ *   2. Studio: the Master draws three looks for the app (muse-wonder-1.0); Ori's look checks run on its server, and
+ *      looks they send back get Ori's repair turn.
  *   3. Pictures: Ori's picture guard judges two Muse Image prompts (muse-spark-1.3 classifier on Ori's server).
  *
  * Needs ORI_JUDGE_KEY (create one at https://alpha.orgenix.ai/judge/keys). Prompts never come back, only answers.
  */
 import { oriSeamFromEnv } from "./seam/http";
-import { readDrawnLooks } from "./studio/server/design-studio-looks";
 
 const DEFAULT_IDEA =
   "A class waitlist for my small yoga studio with outdoor classes in the park. Students sign in with Google, see the weekly timetable, and join a waitlist when a class is full. When someone cancels, the next person on the waitlist gets an email and the spot. For outdoor classes, everyone booked gets a warning the day before if rain is forecast.";
@@ -24,6 +23,28 @@ function jsonIn(text: string): Record<string, unknown> | null {
   } catch {
     return null;
   }
+}
+
+/** The looks in an answer Ori's checks passed, as plain fields to print. */
+function looksIn(answer: Record<string, unknown> | null) {
+  const text = (value: unknown, fallback = "") => (typeof value === "string" ? value : fallback);
+  const field = (value: unknown) => (value && typeof value === "object" ? (value as Record<string, unknown>) : {});
+  const looks = Array.isArray(answer?.looks) ? (answer.looks as unknown[]) : [];
+  return looks.map((raw) => {
+    const look = field(raw);
+    const theme = field(look.theme);
+    return {
+      name: text(look.name),
+      scheme: text(look.scheme),
+      summary: text(look.summary),
+      accent: text(field(theme.palette).accent),
+      display: text(field(theme.fonts).display),
+      body: text(field(theme.fonts).body),
+      shell: text(field(theme.layout).shell, "rail"),
+      width: text(field(theme.layout).width, "standard"),
+      density: text(theme.density, "comfortable"),
+    };
+  });
 }
 
 const rule = (title: string) => console.log(`\n── ${title} ${"─".repeat(Math.max(0, 66 - title.length))}`);
@@ -43,27 +64,27 @@ async function main() {
   rule("Studio · three looks for this app (muse-wonder-1.0)");
   const drawn = await ori.complete("studio.looks", { app: idea });
   spent += drawn.costUsd;
-  let studio = jsonIn(drawn.text);
-  let looks = readDrawnLooks(studio?.looks, studio?.identity);
-  if (!looks.ok) {
+  let answer = drawn.text;
+  // Ori's look checks run on its server: policy("studio-looks") answers pass, or what to fix.
+  let checked = await ori.policy("studio-looks", answer);
+  if (!checked.pass) {
     // As in Ori: what the checks found goes back to the Master once, on Ori's repair turn.
     console.log("Ori's look checks sent the looks back:");
-    for (const problem of looks.problems) console.log(`  - ${problem}`);
+    for (const problem of checked.reasons) console.log(`  - ${problem}`);
     console.log("\nRepair turn: the Master redraws them with what the checks found (muse-wonder-1.0).");
-    const repaired = await ori.complete("studio.looksRepair", { app: idea, previous: drawn.text });
+    const repaired = await ori.complete("studio.looksRepair", { app: idea, previous: answer });
     spent += repaired.costUsd;
-    studio = jsonIn(repaired.text);
-    looks = readDrawnLooks(studio?.looks, studio?.identity);
+    answer = repaired.text;
+    checked = await ori.policy("studio-looks", answer);
   }
-  if (looks.ok) {
-    for (const look of looks.looks) {
-      const theme = look.theme;
+  if (checked.pass) {
+    for (const look of looksIn(jsonIn(answer))) {
       console.log(`• ${look.name} (${look.scheme}): ${look.summary}`);
-      console.log(`  accent ${theme.palette.accent} · ${theme.fonts.display} over ${theme.fonts.body} · ${theme.layout.shell}, ${theme.layout.width} · ${theme.density}`);
+      console.log(`  accent ${look.accent} · ${look.display} over ${look.body} · ${look.shell}, ${look.width} · ${look.density}`);
     }
   } else {
-    console.log("The repaired looks still failed Ori's checks (inside Ori, Studio falls back to looks made for the app):");
-    for (const problem of looks.problems) console.log(`  - ${problem}`);
+    console.log("The repaired looks still failed Ori's checks (inside Ori, Studio redraws the failing ones or uses looks made for the app):");
+    for (const problem of checked.reasons) console.log(`  - ${problem}`);
   }
 
   rule("Pictures · Ori's guard on two Muse Image prompts (muse-spark-1.3)");
