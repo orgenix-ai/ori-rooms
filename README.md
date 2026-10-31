@@ -25,7 +25,7 @@ Each call's Muse cost comes back with it, priced from its token usage.
 Needs Node 22 or later.
 
 1. Sign up at https://alpha.orgenix.ai with any email.
-2. Create a key at https://alpha.orgenix.ai/judge/keys with the invite code from your judging invite. The key is shown once; keep it private.
+2. Enter the invite code from your judging invite at https://alpha.orgenix.ai/judge/keys. That unlocks Ori's whole build for your apps on alpha and gives you a key. The key is shown once; keep it private.
 3. Install and run:
 
 ```bash
