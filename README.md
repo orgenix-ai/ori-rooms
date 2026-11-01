@@ -24,8 +24,8 @@ Each call's Muse cost comes back with it, priced from its token usage.
 
 Needs Node 22 or later and git.
 
-1. **Create an Ori account.** Go to https://alpha.orgenix.ai/login?mode=signup, sign up with any email and a password, open the confirmation link Ori emails you, then log in.
-2. **Get a judge key.** Go to https://alpha.orgenix.ai/judge/keys. Enter the invite code from your judging invite, tick "I accept these terms" and choose **Create a key**. Copy the key (it starts with `ori_judge_`). It is shown only once.
+1. **Open your invite link** at https://alpha.orgenix.ai/invited. Create an account with any email and a password, and open the confirmation link Ori emails you.
+2. **Enter your invite code** when Ori asks for it, then choose **Get a key**. Tick "I accept these terms", choose **Create key** and copy the key (it starts with `ori_judge_`). It is shown only once.
 3. **Install and run:**
 
 ```bash
@@ -50,11 +50,11 @@ At the end it prints the run's Muse cost. Each judge has $20 of model use across
 
 - `Set ORI_JUDGE_KEY to your judge key`: the key is missing from the command.
 - `This key is not known`: the key was mistyped or revoked. Create a new one on the key page.
-- The key page asks you to log in again: confirm your email first, then log in.
+- Ori asks you to log in again: open the confirmation link in your email first, then log in.
 
 ## Build a whole app in Ori
 
-The same invite code unlocks Ori's whole build on alpha. At https://alpha.orgenix.ai, start an app from your idea. Ori's team takes it through Direction, Design Studio, a plan, the build and QA to a live app, on Muse models.
+Your invite code also unlocks Ori's whole build on alpha. After entering it, choose **Start an app** and describe your idea. Ori's team takes it through Direction, Design Studio, a plan, the build and QA to a live app, on Muse models.
 
 ## Start an app from Muse Code
 
