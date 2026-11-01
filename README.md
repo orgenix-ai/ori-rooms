@@ -1,8 +1,6 @@
 # Ori rooms
 
-Ori is an AI app builder we're developing at Orgenix: a team of AI agents takes an app idea through Direction, Design Studio, a plan, a prototype, architecture, build and QA, all the way to a live app. During the Meta hackathon we built a seam that lets code outside Ori drive Ori's rooms on Meta's Muse models. This repo holds that work, and only that work. You can run it against Ori with a judge key.
-
-Ori's existing rooms are in the private product and are called through the seam: the Muse route and prices, the Muse relay with its Muse Image call, Studio's look checks, Direction's reply protocol and the Muse Code driver.
+Ori is an AI app builder we're developing at Orgenix: a team of AI agents takes an app idea through Direction, Design Studio, a plan, a prototype, architecture, build and QA, all the way to a live app. This repo holds the work developed during the Meta hackathon building Ori's rooms on Meta's Muse models. It can be run with a judge key.
 
 ## Built during the event (this repo, and Ori's side of it)
 
