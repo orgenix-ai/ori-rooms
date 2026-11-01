@@ -11,10 +11,23 @@ Ori is an AI app builder we're developing at Orgenix: a team of AI agents takes 
 
 ## Where each Muse model is used
 
-| Muse model | Called by | What it does in Ori |
+In a project set to Meta (the default for judges), Ori's agents in each room run on Muse models: the heavier steps on muse-wonder-1.0, the light ones on muse-spark-1.3, and pictures on muse-image-1.0.
+
+| Room | Muse model | What it does |
 | --- | --- | --- |
-| **muse-wonder-1.0** | `complete("direction.opening")`, `complete("studio.looks")`, `complete("studio.looksRepair")` | Ori's Design Master in Direction and Studio |
-| **muse-spark-1.3** | `policy("picture-guard")` | Reads every picture prompt before Muse Image sees it |
+| **Direction** | muse-wonder-1.0 | The Design Master's chat and the Direction brief |
+| **Design Studio** | muse-wonder-1.0 | The Studio session, three looks for the app, plan changes at the end of Studio, and the published design profile and sample pages |
+| | muse-image-1.0 | Real photos in the sample pages |
+| | muse-spark-1.3 | The picture guard: reads every picture prompt before Muse Image sees it |
+| **Product plan** | muse-wonder-1.0 | The Business Analyst's analysis and draft, the Critic's pass, answers to your questions, plan changes from a discussion, and the clickable prototype |
+| **Architecture** | muse-wonder-1.0 | The room's guide, the Build Specification (stack, integrations, each journey), the check of the plan against Direction and Studio, and the delivery backlog |
+| **Build** | muse-wonder-1.0 | Muse Code in Ori's sandbox: the lead's plan and briefs, a builder per work unit, an independent review and verification, and defect fixes |
+| | muse-spark-1.3 | The helper model Muse Code runs beside each build |
+| | muse-image-1.0 | Real photos in the built app |
+| **QA** | muse-wonder-1.0 | Quality standards before the build, QA expectations for each work unit, and independent QA of each change |
+| **Release** | muse-wonder-1.0 | The release agent's chat, domain name ideas, and the setup guide for the app's connected services |
+
+This repo reaches some of those steps through the seam: `complete("direction.opening")`, `complete("studio.looks")` and `complete("studio.looksRepair")` run on muse-wonder-1.0, and `policy("picture-guard")` on muse-spark-1.3.
 
 Each call's Muse cost comes back with it, priced from its token usage.
 

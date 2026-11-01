@@ -55,11 +55,17 @@ async function main() {
   let spent = 0;
 
   rule("Direction · Ori's Design Master opens (muse-wonder-1.0)");
-  const opening = await ori.complete("direction.opening", { repository: "your-app", description: idea });
+  const opening = await ori.complete("direction.opening", { repository: "your app", description: idea });
   spent += opening.costUsd;
   const direction = jsonIn(opening.text);
   console.log(typeof direction?.reply === "string" ? direction.reply : opening.text);
-  if (direction?.axes) console.log(`\nAxes: ${JSON.stringify(direction.axes)}`);
+  // Where the Master leans on each Direction axis, as the Direction room shows them.
+  if (direction?.axes && typeof direction.axes === "object") {
+    console.log("\nWhere it leans:");
+    for (const [axis, value] of Object.entries(direction.axes as Record<string, { label?: unknown }>)) {
+      if (typeof value?.label === "string") console.log(`  ${axis.replace(/_/g, " ")}: ${value.label}`);
+    }
+  }
 
   rule("Studio · three looks for this app (muse-wonder-1.0)");
   const drawn = await ori.complete("studio.looks", { app: idea });
@@ -87,7 +93,8 @@ async function main() {
     for (const problem of checked.reasons) console.log(`  - ${problem}`);
   }
 
-  rule("Pictures · Ori's guard on two Muse Image prompts (muse-spark-1.3)");
+  // The same two sample prompts for every idea: one an app may use, one Ori refuses (a real person's likeness).
+  rule("Pictures · Ori's guard on two sample Muse Image prompts (muse-spark-1.3)");
   for (const prompt of ["a sunny yoga class on a park lawn, anonymous students on mats, morning light", "a portrait of a famous movie star doing yoga"]) {
     const verdict = await ori.policy("picture-guard", prompt);
     console.log(`${verdict.pass ? "✓ allowed" : "✗ refused"}  ${prompt}`);
