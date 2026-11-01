@@ -1,12 +1,12 @@
-# Ori rooms
+# Ori
 
 Ori is an AI app builder we're developing at Orgenix: a team of AI agents takes an app idea through Direction, Design Studio, a plan, a prototype, architecture, build and QA, all the way to a live app. This repo holds the work developed during the Meta hackathon building Ori's rooms on Meta's Muse models. It can be run with a judge key.
 
 ## Built during the event (this repo, and Ori's side of it)
 
-- **The seam** (`src/seam/ori-seam.ts`): `complete(key, vars)` runs one of Ori's prompts on Muse and returns only the answer and its cost; `policy(key, input)` returns one of Ori's verdicts; `next(projectId)` says which room and step run next.
-- **The HTTP client** (`src/seam/http.ts`): the seam over Ori's `/api/seam/*`, authenticated with a judge key.
-- **This CLI** (`src/cli.ts`): one app idea through Direction and Studio, then the picture guard.
+- **The seam**: runs one of Ori's prompts on Muse and returns only the answer and its cost.
+- **The HTTP client**: the layer over Ori's `/api/seam/*`, authenticated with a judge key.
+- **This CLI**: one app idea through Direction and Studio, then the picture guard.
 - **Ori's side, in the private product:** `/api/seam/*`, with judge keys that are hashed, scoped, rate-limited, spend-capped and expiring; Studio's look checks and the picture guard as seam policies; the prompts pulled out of the room code behind the seam; and the mirror that publishes this repo with guards against any private prompt text or secret.
 
 ## Where each Muse model is used
