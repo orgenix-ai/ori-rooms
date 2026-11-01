@@ -22,13 +22,15 @@ Each call's Muse cost comes back with it, priced from its token usage.
 
 ## Run it
 
-Needs Node 22 or later.
+Needs Node 22 or later and git.
 
-1. Sign up at https://alpha.orgenix.ai with any email.
-2. Enter the invite code from your judging invite at https://alpha.orgenix.ai/judge/keys. That unlocks Ori's whole build for your apps on alpha and gives you a key. The key is shown once; keep it private.
-3. Install and run:
+1. **Create an Ori account.** Go to https://alpha.orgenix.ai/login?mode=signup, sign up with any email and a password, open the confirmation link Ori emails you, then log in.
+2. **Get a judge key.** Go to https://alpha.orgenix.ai/judge/keys. Enter the invite code from your judging invite, tick "I accept these terms" and choose **Create a key**. Copy the key (it starts with `ori_judge_`). It is shown only once.
+3. **Install and run:**
 
 ```bash
+git clone https://github.com/orgenix-ai/ori-rooms.git
+cd ori-rooms
 npm install
 ORI_JUDGE_KEY=ori_judge_… npm start
 ```
@@ -40,13 +42,23 @@ The run does three things:
 2. Studio draws three looks, and Ori checks them on its server (`policy("studio-looks")`). Looks the checks send back get Ori's repair turn, as in the product.
 3. Ori's picture guard judges two Muse Image prompts: one it allows, one it refuses.
 
-At the end it prints the run's Muse cost. Each key has a spend cap and expires after judging.
+At the end it prints the run's Muse cost. Each judge has $20 of model use across their keys, and keys expire when judging ends.
 
 `npm run typecheck` checks the code.
 
-## See a whole app's journey
+### If something goes wrong
 
-The Muse Code connector (start an app in Ori from Muse Code): https://github.com/orgenix-ai/ori-for-muse
+- `Set ORI_JUDGE_KEY to your judge key`: the key is missing from the command.
+- `This key is not known`: the key was mistyped or revoked. Create a new one on the key page.
+- The key page asks you to log in again: confirm your email first, then log in.
+
+## Build a whole app in Ori
+
+The same invite code unlocks Ori's whole build on alpha. At https://alpha.orgenix.ai, start an app from your idea. Ori's team takes it through Direction, Design Studio, a plan, the build and QA to a live app, on Muse models.
+
+## Start an app from Muse Code
+
+The Muse Code connector hands an idea from Muse Code to Ori: https://github.com/orgenix-ai/ori-for-muse
 
 ## Licence
 
