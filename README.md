@@ -88,18 +88,21 @@ It fails closed: if the classifier can't answer, the picture is refused. A refus
 
 ## What's in this repo
 
-This repo holds the part of Ori that can be public: `src/seam/` is the client for Ori's seam, the narrow interface that runs one of Ori's steps on Muse on Ori's server and returns only the answer and its cost. Ori's prompts and rules stay on the server.
+This repo holds the parts of Ori that can be public:
+
+- `src/seam/` is the client for Ori's seam, the narrow interface that runs one of Ori's steps on Muse on Ori's server and returns only the answer and its cost. Ori's prompts and rules stay on the server.
+- `connector/` is the Muse Code connector (below).
 
 ## Use Ori from Muse Code (the connector)
 
-[Ori for Muse](https://github.com/orgenix-ai/ori-for-muse) is an MCP server that lets **Muse Code**, Meta's coding agent, hand an app idea to Ori. You run it on your own machine; it talks to Ori on alpha with your judge key.
+[`connector/`](connector/) is Ori for Muse, an MCP server that lets **Muse Code**, Meta's coding agent, hand an app idea to Ori. You run it on your own machine; it talks to Ori on alpha with your judge key.
 
 1. **Get a judge key.** On alpha, after entering your invite code (steps 1–3 of *Try it*), choose **Get a key**, tick "I accept these terms", choose **Create key** and copy it. It starts with `ori_judge_` and is shown only once. You can hold up to three live keys; all keys stop working on November 10, 2026.
 2. **Run the connector** (Node 22 or later):
 
    ```bash
-   git clone https://github.com/orgenix-ai/ori-for-muse.git
-   cd ori-for-muse
+   git clone https://github.com/orgenix-ai/ori-rooms.git
+   cd ori-rooms/connector
    npm install
    ORI_BASE_URL=https://alpha.orgenix.ai ORI_CONNECTOR_TOKEN=ori_judge_… npm run dev
    ```
@@ -122,4 +125,4 @@ Nothing is built and nothing is charged until you continue in Ori. The idea neve
 
 ## Licence
 
-Source-available under the PolyForm Noncommercial License 1.0.0 (`LICENSE`).
+Source-available under the PolyForm Noncommercial License 1.0.0 (`LICENSE`), except `connector/`, which is MIT licensed (`connector/LICENSE`).
