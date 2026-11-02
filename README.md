@@ -56,13 +56,23 @@ Needs Node 22 or later and git.
 
 1. **Open your invite link** at https://alpha.orgenix.ai/invited. Create an account with any email and a password, and open the confirmation link Ori emails you.
 2. **Enter your invite code** when Ori asks for it, then choose **Get a key**. Tick "I accept these terms", choose **Create key** and copy the key (it starts with `ori_judge_`). It is shown only once.
-3. **Install and run:**
+3. **Install:**
 
 ```bash
 git clone https://github.com/orgenix-ai/ori-rooms.git
 cd ori-rooms
 npm install
-export ORI_JUDGE_KEY=ori_judge_…   # paste your key
+```
+
+4. **Set your key.** Replace `YOUR_KEY` with the whole key you copied:
+
+```bash
+export ORI_JUDGE_KEY=YOUR_KEY
+```
+
+5. **Run:**
+
+```bash
 npm start
 ```
 
@@ -83,7 +93,7 @@ At the end it prints the run's Muse cost. Each judge has $20 of model use across
 
 ### If something goes wrong
 
-- `No judge key in this terminal`: run the `export ORI_JUDGE_KEY=…` line again, then `npm start`.
+- `No judge key in this terminal`: run step 4 again in this terminal, then `npm start`.
 - `This key is not known`: the key was mistyped or revoked. Create a new one on the key page.
 - Ori asks you to log in again: open the confirmation link in your email first, then log in.
 
