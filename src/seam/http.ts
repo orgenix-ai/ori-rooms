@@ -46,6 +46,6 @@ export function oriSeamOverHttp(options: SeamHttpOptions): OriSecrets {
 /** The seam from the environment: ORI_JUDGE_KEY (required) and ORI_BASE_URL (default https://alpha.orgenix.ai). */
 export function oriSeamFromEnv(env: NodeJS.ProcessEnv = process.env): OriSecrets {
   const key = env.ORI_JUDGE_KEY?.trim();
-  if (!key) throw new Error("Set ORI_JUDGE_KEY to your judge key (create one at https://alpha.orgenix.ai/judge/keys).");
+  if (!key) throw new Error("No judge key in this terminal. Run: export ORI_JUDGE_KEY=<your key>  (get a key at https://alpha.orgenix.ai/invited), then npm start.");
   return oriSeamOverHttp({ baseUrl: env.ORI_BASE_URL?.trim() || "https://alpha.orgenix.ai", key });
 }
