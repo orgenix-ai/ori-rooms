@@ -11,7 +11,7 @@ Ori runs at **https://alpha.orgenix.ai** for judges.
 1. **Open your invite link**: https://alpha.orgenix.ai/invited
 2. **Create an account** with any email and a password, then open the confirmation link Ori emails you.
 3. **Enter your invite code** when Ori asks for it. (Five wrong tries lock the code step for an hour.)
-4. **Choose Start an app** and describe your idea in a sentence or two, for example "a booking app for my bike repair shop".
+4. **Choose Start an app** on the "You're in" page and describe your idea in a sentence or two, for example "a booking app for my bike repair shop". (The page's second card, **Use Ori from Muse Code**, is where you get the key for the connector below.)
 5. Ori's team takes it from there: answer its questions in Direction, pick a look in Design Studio, approve the plan and click through the prototype, then let the team build it.
 
 A judge account holds up to three apps. Builds run on Orgenix's Muse account, so you don't need a key or a card.
@@ -97,7 +97,7 @@ This repo holds the parts of Ori that can be public:
 
 [`connector/`](connector/) is Ori for Muse, an MCP server that lets **Muse Code**, Meta's coding agent, hand an app idea to Ori. You run it on your own machine; it talks to Ori on alpha with your judge key.
 
-1. **Get a judge key.** On alpha, after entering your invite code (steps 1–3 of *Try it*), choose **Get a key**, tick "I accept these terms", choose **Create key** and copy it. It starts with `ori_judge_` and is shown only once. You can hold up to three live keys; all keys stop working on November 10, 2026.
+1. **Get a judge key.** Muse Code needs one to reach Ori. On alpha, after entering your invite code (steps 1–3 of *Try it*), the "You're in" page shows a **Use Ori from Muse Code** card: choose **Get a key** there, tick "I accept these terms", choose **Create key** and copy it. It starts with `ori_judge_` and is shown only once. You can hold up to three live keys; all keys stop working on November 10, 2026.
 2. **Run the connector** (Node 22 or later):
 
    ```bash
