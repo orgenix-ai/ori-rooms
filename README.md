@@ -1,6 +1,23 @@
 # Ori rooms
 
-Ori is an AI app builder we're developing at Orgenix: a team of AI agents takes an app idea through Direction, Design Studio, a plan, a prototype, architecture, build and QA, all the way to a live app. This repo holds the work developed during the Meta hackathon building Ori's rooms on Meta's Muse models. It can be run with a judge key.
+Ori is an AI app builder we're developing at Orgenix: a team of AI agents takes an app idea through Direction, Design Studio, a plan, a prototype, architecture, build and QA, all the way to a live app. This repo holds the work developed during the Meta hackathon building Ori's rooms on Meta's Muse models. To try Ori, start with **Try Ori** below.
+
+## Try Ori (start here)
+
+Ori runs on the web at https://alpha.orgenix.ai. You need the invite code from the submission form.
+
+1. Open https://alpha.orgenix.ai/invited and create an account with any email. Open the confirmation link Ori emails you.
+2. Enter the invite code when Ori asks for it.
+3. Choose **Start an app** and describe an app you'd want, in a sentence or two.
+4. Watch Ori's team take it from there, on Muse models:
+   - **Direction:** the Design Master shapes how the app should feel and asks you a question or two.
+   - **Design Studio:** three looks for your app with real photos; pick one and approve it.
+   - **Product plan:** the Business Analyst writes the plan, with Ori settling the decisions for you.
+   - **Prototype:** a clickable prototype of your app.
+
+Each step takes a few minutes. Ori builds your app free, with a cap on model use per judge.
+
+To see a finished app Ori built on Muse, open Lotus Loft: https://stg-lotus-loft-1cf636.orgenix.app
 
 ## Built during the event (this repo, and Ori's side of it)
 
@@ -31,7 +48,9 @@ This repo reaches some of those steps through the seam: `complete("direction.ope
 
 Each call's Muse cost comes back with it, priced from its token usage.
 
-## Run it
+## Run this repo (for code reviewers)
+
+This repo drives two of Ori's rooms from the command line through the seam. It is optional; the website above is the main way to try Ori.
 
 Needs Node 22 or later and git.
 
@@ -67,10 +86,6 @@ At the end it prints the run's Muse cost. Each judge has $20 of model use across
 - `No judge key in this terminal`: run the `export ORI_JUDGE_KEY=…` line again, then `npm start`.
 - `This key is not known`: the key was mistyped or revoked. Create a new one on the key page.
 - Ori asks you to log in again: open the confirmation link in your email first, then log in.
-
-## Build a whole app in Ori
-
-Your invite code also unlocks Ori's whole build on alpha. After entering it, choose **Start an app** and describe your idea. Ori's team takes it through Direction, Design Studio, a plan, the build and QA to a live app, on Muse models.
 
 ## Start an app from Muse Code
 
