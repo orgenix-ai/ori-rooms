@@ -1,106 +1,125 @@
-# Ori rooms
+# Ori on Meta's Muse
 
-Ori is an AI app builder we're developing at Orgenix: a team of AI agents takes an app idea through Direction, Design Studio, a plan, a prototype, architecture, build and QA, all the way to a live app. This repo holds the work developed during the Meta hackathon building Ori's rooms on Meta's Muse models. To try Ori, start with **Try Ori** below.
+Ori is an AI software team you talk to. You describe an app; Ori's agents take it through Direction, Design Studio, a product plan with a clickable prototype, architecture, build and QA, to a live app at its own address. You make the real choices, and Ori writes down every call it makes.
 
-## Try Ori (start here)
+Every one of those agents runs on Meta's Muse models. This page explains how.
 
-Ori runs on the web at https://alpha.orgenix.ai. You need the invite code from the submission form.
+## Try it
 
-1. Open https://alpha.orgenix.ai/invited and create an account with any email. Open the confirmation link Ori emails you.
-2. Enter the invite code when Ori asks for it.
-3. Choose **Start an app** and describe an app you'd want, in a sentence or two.
-4. Watch Ori's team take it from there, on Muse models:
-   - **Direction:** the Design Master shapes how the app should feel and asks you a question or two.
-   - **Design Studio:** three looks for your app with real photos; pick one and approve it.
-   - **Product plan:** the Business Analyst writes the plan, with Ori settling the decisions for you.
-   - **Prototype:** a clickable prototype of your app.
+Ori runs at **https://alpha.orgenix.ai** for judges.
 
-Each step takes a few minutes. Ori builds your app free, with a cap on model use per judge.
+1. **Open your invite link**: https://alpha.orgenix.ai/invited
+2. **Create an account** with any email and a password, then open the confirmation link Ori emails you.
+3. **Enter your invite code** when Ori asks for it. (Five wrong tries lock the code step for an hour.)
+4. **Choose Start an app** and describe your idea in a sentence or two, for example "a booking app for my bike repair shop".
+5. Ori's team takes it from there: answer its questions in Direction, pick a look in Design Studio, approve the plan and click through the prototype, then let the team build it.
 
-To see a finished app Ori built on Muse, open Lotus Loft: https://stg-lotus-loft-1cf636.orgenix.app
+A judge account holds up to three apps. Builds run on Orgenix's Muse account, so you don't need a key or a card.
 
-## Built during the event (this repo, and Ori's side of it)
+## How Ori uses Muse
 
-- **The seam** (`src/seam/ori-seam.ts`): `complete(key, vars)` runs one of Ori's prompts on Muse and returns only the answer and its cost; `policy(key, input)` returns one of Ori's verdicts; `next(projectId)` says which room and step run next.
-- **The HTTP client** (`src/seam/http.ts`): the seam over Ori's `/api/seam/*`, authenticated with a judge key.
-- **This CLI** (`src/cli.ts`): one app idea through Direction and Studio, then the picture guard.
-- **Ori's side, in the private product:** `/api/seam/*`, with judge keys that are hashed, scoped, rate-limited, spend-capped and expiring; Studio's look checks and the picture guard as seam policies; the prompts pulled out of the room code behind the seam; and the mirror that publishes this repo with guards against any private prompt text or secret.
+### One model choice per project
 
-## Where each Muse model is used
+Each project picks an AI provider; for judges, and for every new project, the default is **Meta (Muse)**. Ori's agents ask for a strength, not a model: light, medium or strong. On Meta those map to:
 
-In a project set to Meta (the default for judges), Ori's agents in each room run on Muse models: the heavier steps on muse-wonder-1.0, the light ones on muse-spark-1.3, and pictures on muse-image-1.0.
+| Strength | Muse model |
+| --- | --- |
+| Light | muse-spark-1.3 |
+| Medium | muse-wonder-1.0 |
+| Strong | muse-wonder-1.0 |
+| Pictures | muse-image-1.0 |
 
-| Room | Muse model | What it does |
-| --- | --- | --- |
-| **Direction** | muse-wonder-1.0 | The Design Master's chat and the Direction brief |
-| **Design Studio** | muse-wonder-1.0 | The Studio session, three looks for the app, plan changes at the end of Studio, and the published design profile and sample pages |
-| | muse-image-1.0 | Real photos in the sample pages |
-| | muse-spark-1.3 | The picture guard: reads every picture prompt before Muse Image sees it |
-| **Product plan** | muse-wonder-1.0 | The Business Analyst's analysis and draft, the Critic's pass, answers to your questions, plan changes from a discussion, and the clickable prototype |
-| **Architecture** | muse-wonder-1.0 | The room's guide, the Build Specification (stack, integrations, each journey), the check of the plan against Direction and Studio, and the delivery backlog |
-| **Build** | muse-wonder-1.0 | Muse Code in Ori's sandbox: the lead's plan and briefs, a builder per work unit, an independent review and verification, and defect fixes |
-| | muse-spark-1.3 | The helper model Muse Code runs beside each build |
-| | muse-image-1.0 | Real photos in the built app |
-| **QA** | muse-wonder-1.0 | Quality standards before the build, QA expectations for each work unit, and independent QA of each change |
-| **Release** | muse-wonder-1.0 | The release agent's chat, domain name ideas, and the setup guide for the app's connected services |
+If a step's model isn't available, the step is refused and reported, never quietly swapped for another provider's model. A project set to Meta runs on Muse from start to finish.
 
-This repo reaches some of those steps through the seam: `complete("direction.opening")`, `complete("studio.looks")` and `complete("studio.looksRepair")` run on muse-wonder-1.0, and `policy("picture-guard")` on muse-spark-1.3.
+### Room by room
 
-Each call's Muse cost comes back with it, priced from its token usage.
+| Room | Agent | Muse model | What it does on Muse |
+| --- | --- | --- | --- |
+| **Direction** | Design Master | muse-wonder-1.0 | Asks one question at a time about who the app is for and what it must do, then writes the Direction brief. |
+| **Design Studio** | Design Master | muse-wonder-1.0 | Designs three looks for this app as live sample pages, takes your pushback, and publishes the chosen design profile. |
+| | Illustrator | muse-image-1.0 | Draws the real photos inside the sample pages. |
+| | Picture guard | muse-spark-1.3 | Checks every picture prompt before Muse Image sees it (below). |
+| | Design triage | muse-spark-1.3 | The Studio's light step: a quick first read of a design request. |
+| **Product plan** | Business Analyst | muse-wonder-1.0 | Analyzes the brief, drafts who uses the app and their journeys, and answers your questions about the plan. |
+| | Critic | muse-wonder-1.0 | Reviews the analyst's draft and sends back what doesn't hold up. |
+| | Prototype | muse-wonder-1.0 | Builds the clickable prototype you try before anything is built. |
+| **Architecture** | Architect | muse-wonder-1.0 | Writes the Build Specification (stack, integrations, and each journey's flow, data, screens and behaviour), explains it in plain language, and answers questions while moving the map. |
+| **Build** | Muse Code team | muse-wonder-1.0 | Builds the app in an isolated sandbox (below). |
+| | Helper | muse-spark-1.3 | Muse Code's background model beside each build agent. |
+| | Illustrator | muse-image-1.0 | Draws the photos inside the built app. |
+| **QA** | Quality agents | muse-wonder-1.0 | Set the quality standards before the build, write what each piece must pass, and test the finished app against the plan. |
+| **Release** | Release agent | muse-wonder-1.0 | Leads go-live, suggests domain names, and writes the setup guide for the app's connected services. |
+| **Delivery** | Project manager | muse-wonder-1.0 | Picks the next work and watches for stalled steps. |
 
-## Run this repo (for code reviewers)
+### The build: a Muse Code team in a sandbox
 
-This repo drives two of Ori's rooms from the command line through the seam. It is optional; the website above is the main way to try Ori.
+The build runs **Muse Code** inside an isolated sandbox, one session per role, all on muse-wonder-1.0 with muse-spark-1.3 as Muse Code's helper model:
 
-Needs Node 22 or later and git.
+- a **lead** lays the foundation;
+- **three art directors** each propose a look, and a **picker** chooses one;
+- **six screen designers** draw the app's screens in parallel;
+- a **builder** wires up the features;
+- an **illustrator** draws the photos with Muse Image;
+- a **finisher** pulls it together and a **critic** reviews it;
+- **QA** verifies the app in a browser, and a **fixer** repairs what QA finds.
 
-1. **Open your invite link** at https://alpha.orgenix.ai/invited. Create an account with any email and a password, and open the confirmation link Ori emails you.
-2. **Enter your invite code** when Ori asks for it, then choose **Get a key**. Tick "I accept these terms", choose **Create key** and copy the key (it starts with `ori_judge_`). It is shown only once.
-3. **Install:**
+Muse Code inside the sandbox never holds Orgenix's Meta key. It talks to a relay on the host, which holds the key and passes on only three things: the build model, the helper model and Muse Image. Every call is metered through that relay, and the build stops when it reaches its spending or time limit.
 
-```bash
-git clone https://github.com/orgenix-ai/ori-rooms.git
-cd ori-rooms
-npm install
-```
+### Pictures with Muse Image, behind a guard
 
-4. **Set your key.** Replace `YOUR_KEY` with the whole key you copied:
+Pictures appear in two places: the Studio's sample pages and the built app.
 
-```bash
-export ORI_JUDGE_KEY=YOUR_KEY
-```
+- **In Studio**, the Design Master marks where a photo belongs and describes it. Each description goes through the picture guard. If allowed, Muse Image draws it at 1536×1024 with no text, no logos and no recognizable real people, and Ori stores it with the design. A session draws at most 12 pictures.
+- **In a build**, the illustrator asks the relay for each picture, one per call. The relay applies the same guard, caps a build at 24 pictures, and saves each as a 1600×1200 photo with a record of its prompt.
 
-5. **Run:**
+**The picture guard** has two layers, and a prompt must pass both:
 
-```bash
-npm start
-```
+1. fixed rules for what never gets drawn (public figures, brands and logos, text in pictures, sexual content, violence, crime, real people described by role);
+2. a **muse-spark-1.3** classifier that reads the prompt as untrusted data and answers allow or refuse.
 
-Give your own idea with:
+It fails closed: if the classifier can't answer, the picture is refused. A refused picture becomes a placeholder in Studio, and in a build the agent is told to describe a simpler scene. A build that keeps getting refused is stopped.
 
-```bash
-npm start -- "a booking app for my bike repair shop"
-```
+### Calls, cost and limits
 
-The run does three things:
-1. Ori's Design Master opens Direction for the idea.
-2. Studio draws three looks, and Ori checks them on its server (`policy("studio-looks")`). Looks the checks send back get Ori's repair turn, as in the product.
-3. Ori's picture guard judges two Muse Image prompts: one it allows, one it refuses.
+- Ori calls Muse through the **Meta Model API** at `https://api.meta.ai/v1`. Long steps run as background responses that Ori polls, so a long Muse answer never hangs a page.
+- Muse reasons before it answers, so steps that return structured answers get room for both. The Business Analyst's answers, for example, get 4,000 output tokens.
+- **Every call is priced from its token usage** at Muse's rates (per million tokens: muse-wonder-1.0 $4 in and $20 out; muse-spark-1.3 $1.25 in and $4.25 out), and each Muse Image picture at $0.01. Each cost is recorded against its project and the step that made it.
+- A step that stalls is stopped at twice the usual time for that model and step, and reported. A step is never moved to another provider's model.
 
-At the end it prints the run's Muse cost. Each judge has $20 of model use across their keys, and keys expire when judging ends.
+## What's in this repo
 
-`npm run typecheck` checks the code.
+This repo holds the part of Ori that can be public: `src/seam/` is the client for Ori's seam, the narrow interface that runs one of Ori's steps on Muse on Ori's server and returns only the answer and its cost. Ori's prompts and rules stay on the server.
 
-### If something goes wrong
+## Use Ori from Muse Code (the connector)
 
-- `No judge key in this terminal`: run step 4 again in this terminal, then `npm start`.
-- `This key is not known`: the key was mistyped or revoked. Create a new one on the key page.
-- Ori asks you to log in again: open the confirmation link in your email first, then log in.
+[Ori for Muse](https://github.com/orgenix-ai/ori-for-muse) is an MCP server that lets **Muse Code**, Meta's coding agent, hand an app idea to Ori. You run it on your own machine; it talks to Ori on alpha with your judge key.
 
-## Start an app from Muse Code
+1. **Get a judge key.** On alpha, after entering your invite code (steps 1–3 of *Try it*), choose **Get a key**, tick "I accept these terms", choose **Create key** and copy it. It starts with `ori_judge_` and is shown only once. You can hold up to three live keys; all keys stop working on November 10, 2026.
+2. **Run the connector** (Node 22 or later):
 
-The Muse Code connector hands an idea from Muse Code to Ori: https://github.com/orgenix-ai/ori-for-muse
+   ```bash
+   git clone https://github.com/orgenix-ai/ori-for-muse.git
+   cd ori-for-muse
+   npm install
+   ORI_BASE_URL=https://alpha.orgenix.ai ORI_CONNECTOR_TOKEN=ori_judge_… npm run dev
+   ```
+
+   It listens at `http://localhost:8787/mcp`.
+3. **Add it to Muse Code.** In `~/.config/muse/settings.json`:
+
+   ```json
+   {
+     "mcpServers": {
+       "ori": { "url": "http://localhost:8787/mcp" }
+     }
+   }
+   ```
+
+4. **Ask Muse Code for an app**, for example: *"Use Ori to build a booking app for my bike repair shop."* Muse Code calls Ori's `start_app_with_ori` tool. Ori keeps the idea for 30 minutes behind a one-time link and gives Muse Code that link.
+5. **Open the link.** Ori opens on alpha with your idea already in the conversation. Sign in with your judge account, and Ori's team takes it from there, on Muse, exactly as in *Try it*.
+
+Nothing is built and nothing is charged until you continue in Ori. The idea never goes into a URL, and a link works once. Each machine can hand Ori 30 ideas a day.
 
 ## Licence
 
-Source-available under the PolyForm Noncommercial License 1.0.0 (`LICENSE`). The judge-key terms on the key page apply to calls to Ori.
+Source-available under the PolyForm Noncommercial License 1.0.0 (`LICENSE`).
