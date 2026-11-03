@@ -6,8 +6,6 @@ Every one of those agents runs on Meta's Muse models. This page explains how.
 
 ## Try it
 
-Ori runs at **https://alpha.orgenix.ai** for judges.
-
 1. **Open your invite link**: https://alpha.orgenix.ai/invited
 2. **Create an account** with any email and a password, then open the confirmation link Ori emails you.
 3. **Enter your invite code** when Ori asks for it. (Five wrong tries lock the code step for an hour.)
