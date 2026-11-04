@@ -14,6 +14,47 @@ Every one of those agents runs on Meta's Muse models. This page explains how.
 
 A judge account holds up to three apps. Builds run on Orgenix's Muse account, so you don't need a key or a card.
 
+## What's in this repo
+
+This repo holds the parts of Ori that can be public:
+
+- `src/seam/` is the client for Ori's seam, the narrow interface that runs one of Ori's steps on Muse on Ori's server and returns only the answer and its cost. Ori's prompts and rules stay on the server.
+- `connector/` is the Muse Code connector (below).
+
+## Use Ori from Muse Code (the connector)
+
+[`connector/`](connector/) is Ori for Muse, an MCP server that lets **Muse Code**, Meta's coding agent, hand an app idea to Ori. You run it on your own machine; it talks to Ori on alpha with your judge key.
+
+1. **Get a judge key.** Muse Code needs one to reach Ori. On alpha, after entering your invite code (steps 1–3 of *Try it*), the "You're in" page shows a **Use Ori from Muse Code** card: choose **Get a key** there, tick "I accept these terms", choose **Create key** and copy it. It starts with `ori_judge_` and is shown only once. You can hold up to three live keys; all keys stop working on November 10, 2026.
+2. **Run the connector** (Node 22 or later):
+
+   ```bash
+   git clone https://github.com/orgenix-ai/ori-rooms.git
+   cd ori-rooms/connector
+   npm install
+   ORI_BASE_URL=https://alpha.orgenix.ai ORI_CONNECTOR_TOKEN=ori_judge_… npm run dev
+   ```
+
+   It listens at `http://localhost:8787/mcp`.
+3. **Add it to Muse Code.** In `~/.config/muse/settings.json`:
+
+   ```json
+   {
+     "mcpServers": {
+       "ori": { "url": "http://localhost:8787/mcp" }
+     }
+   }
+   ```
+
+4. **Ask Muse Code for an app**, for example: *"Use Ori to build a booking app for my bike repair shop."* Muse Code calls Ori's `start_app_with_ori` tool. Ori keeps the idea for 30 minutes behind a one-time link and gives Muse Code that link. (If Muse Code asks you questions instead, say "call start_app_with_ori with this idea".)
+5. **Open the link** (click it yourself; Muse Code can't open it for you). Ori opens on alpha with your idea already in the conversation. Sign in with your judge account, and Ori's team takes it from there, on Muse, exactly as in *Try it*.
+
+Nothing is built and nothing is charged until you continue in Ori. The idea never goes into a URL, and a link works once. Each machine can hand Ori 30 ideas a day.
+
+## Licence
+
+Source-available under the PolyForm Noncommercial License 1.0.0 (`LICENSE`), except `connector/`, which is MIT licensed (`connector/LICENSE`).
+
 ## How Ori uses Muse
 
 More detail: [How Ori uses Muse, with code](docs/MUSE-INTEGRATION.md) and [Ori on Muse: what we measured](docs/ORI-ON-MUSE-RESULTS.md).
@@ -85,44 +126,3 @@ It fails closed: if the classifier can't answer, the picture is refused. A refus
 - Muse reasons before it answers, so steps that return structured answers get room for both. The Business Analyst's answers, for example, get 4,000 output tokens.
 - **Every call is priced from its token usage** at Muse's rates (per million tokens: muse-wonder-1.0 $4 in and $20 out; muse-spark-1.3 $1.25 in and $4.25 out), and each Muse Image picture at $0.01. Each cost is recorded against its project and the step that made it.
 - A step that stalls is stopped at twice the usual time for that model and step, and reported. A step is never moved to another provider's model.
-
-## What's in this repo
-
-This repo holds the parts of Ori that can be public:
-
-- `src/seam/` is the client for Ori's seam, the narrow interface that runs one of Ori's steps on Muse on Ori's server and returns only the answer and its cost. Ori's prompts and rules stay on the server.
-- `connector/` is the Muse Code connector (below).
-
-## Use Ori from Muse Code (the connector)
-
-[`connector/`](connector/) is Ori for Muse, an MCP server that lets **Muse Code**, Meta's coding agent, hand an app idea to Ori. You run it on your own machine; it talks to Ori on alpha with your judge key.
-
-1. **Get a judge key.** Muse Code needs one to reach Ori. On alpha, after entering your invite code (steps 1–3 of *Try it*), the "You're in" page shows a **Use Ori from Muse Code** card: choose **Get a key** there, tick "I accept these terms", choose **Create key** and copy it. It starts with `ori_judge_` and is shown only once. You can hold up to three live keys; all keys stop working on November 10, 2026.
-2. **Run the connector** (Node 22 or later):
-
-   ```bash
-   git clone https://github.com/orgenix-ai/ori-rooms.git
-   cd ori-rooms/connector
-   npm install
-   ORI_BASE_URL=https://alpha.orgenix.ai ORI_CONNECTOR_TOKEN=ori_judge_… npm run dev
-   ```
-
-   It listens at `http://localhost:8787/mcp`.
-3. **Add it to Muse Code.** In `~/.config/muse/settings.json`:
-
-   ```json
-   {
-     "mcpServers": {
-       "ori": { "url": "http://localhost:8787/mcp" }
-     }
-   }
-   ```
-
-4. **Ask Muse Code for an app**, for example: *"Use Ori to build a booking app for my bike repair shop."* Muse Code calls Ori's `start_app_with_ori` tool. Ori keeps the idea for 30 minutes behind a one-time link and gives Muse Code that link. (If Muse Code asks you questions instead, say "call start_app_with_ori with this idea".)
-5. **Open the link** (click it yourself; Muse Code can't open it for you). Ori opens on alpha with your idea already in the conversation. Sign in with your judge account, and Ori's team takes it from there, on Muse, exactly as in *Try it*.
-
-Nothing is built and nothing is charged until you continue in Ori. The idea never goes into a URL, and a link works once. Each machine can hand Ori 30 ideas a day.
-
-## Licence
-
-Source-available under the PolyForm Noncommercial License 1.0.0 (`LICENSE`), except `connector/`, which is MIT licensed (`connector/LICENSE`).
