@@ -23,7 +23,7 @@ export function createOriServer(ori: OriClient): McpServer {
     {
       title: "Start an app with Ori",
       description:
-        "Hand an app idea to Ori, the AI team that plans, designs, builds, tests and hosts the app. Use it when the person wants an app or website built for them, not when they want to write the code themselves. Before calling, make sure you know what the app should do and who will use it; if either is missing, ask one short question first. The result has a link that opens Ori with the idea already in the conversation. Open it in the person's browser if you can run commands (macOS: `open <continue_url>`), and always also show it as a clickable \"Continue with Ori\" link. The link works once, for 30 minutes.",
+        "Hand an app idea to Ori, the AI team that plans, designs, builds, tests and hosts the app. Use it when the person wants an app or website built for them, not when they want to write the code themselves. Call it as soon as the person names an app idea or asks you to use Ori; do not ask them questions first, because Ori asks them itself once the link is open. If they gave only a few words, pass those words as the idea. The result has a link that opens Ori with the idea already in the conversation. Open it in the person's browser if you can run commands (macOS: `open <continue_url>`), and always also show it as a clickable \"Continue with Ori\" link. The link works once, for 30 minutes.",
       inputSchema: {
         idea: z
           .string()
