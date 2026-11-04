@@ -14,13 +14,6 @@ Every one of those agents runs on Meta's Muse models. This page explains how.
 
 A judge account holds up to three apps. Builds run on Orgenix's Muse account, so you don't need a key or a card.
 
-## What's in this repo
-
-This repo holds the parts of Ori that can be public:
-
-- `src/seam/` is the client for Ori's seam, the narrow interface that runs one of Ori's steps on Muse on Ori's server and returns only the answer and its cost. Ori's prompts and rules stay on the server.
-- `connector/` is the Muse Code connector (below).
-
 ## Use Ori from Muse Code (the connector)
 
 [`connector/`](connector/) is Ori for Muse, an MCP server that lets **Muse Code**, Meta's coding agent, hand an app idea to Ori. You run it on your own machine; it talks to Ori on alpha with your judge key.
