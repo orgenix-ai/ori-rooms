@@ -117,7 +117,7 @@ This repo holds the parts of Ori that can be public:
    ```
 
 4. **Ask Muse Code for an app**, for example: *"Use Ori to build a booking app for my bike repair shop."* Muse Code calls Ori's `start_app_with_ori` tool. Ori keeps the idea for 30 minutes behind a one-time link and gives Muse Code that link. (If Muse Code asks you questions instead, say "call start_app_with_ori with this idea".)
-5. **Open the link.** Ori opens on alpha with your idea already in the conversation. Sign in with your judge account, and Ori's team takes it from there, on Muse, exactly as in *Try it*.
+5. **Open the link** (click it yourself; Muse Code can't open it for you). Ori opens on alpha with your idea already in the conversation. Sign in with your judge account, and Ori's team takes it from there, on Muse, exactly as in *Try it*.
 
 Nothing is built and nothing is charged until you continue in Ori. The idea never goes into a URL, and a link works once. Each machine can hand Ori 30 ideas a day.
 
