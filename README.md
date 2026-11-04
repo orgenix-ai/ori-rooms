@@ -6,6 +6,10 @@ Every one of those agents runs on Meta's Muse models. This page explains how.
 
 ## Try it
 
+There are two ways to use Ori. On the web, you open Ori at alpha.orgenix.ai and talk to it in its rooms. From Muse Code, Meta's coding agent, you ask for an app and Muse Code hands your idea to Ori through the connector in this repo. Either way, the same Ori team builds the app on Muse.
+
+### On the web
+
 1. **Open your invite link**: https://alpha.orgenix.ai/invited
 2. **Create an account** with any email and a password, then open the confirmation link Ori emails you.
 3. **Enter your invite code** when Ori asks for it. (Five wrong tries lock the code step for an hour.)
@@ -14,11 +18,11 @@ Every one of those agents runs on Meta's Muse models. This page explains how.
 
 A judge account holds up to three apps. Builds run on Orgenix's Muse account, so you don't need a key or a card.
 
-## Use Ori from Muse Code (the connector)
+### From Muse Code (the connector)
 
 [`connector/`](connector/) is Ori for Muse, an MCP server that lets **Muse Code**, Meta's coding agent, hand an app idea to Ori. You run it on your own machine; it talks to Ori on alpha with your judge key.
 
-1. **Get a judge key.** Muse Code needs one to reach Ori. On alpha, after entering your invite code (steps 1–3 of *Try it*), the "You're in" page shows a **Use Ori from Muse Code** card: choose **Get a key** there, tick "I accept these terms", choose **Create key** and copy it. It starts with `ori_judge_` and is shown only once. You can hold up to three live keys; all keys stop working on November 10, 2026.
+1. **Get a judge key.** Muse Code needs one to reach Ori. On alpha, after entering your invite code (steps 1–3 of *On the web*), the "You're in" page shows a **Use Ori from Muse Code** card: choose **Get a key** there, tick "I accept these terms", choose **Create key** and copy it. It starts with `ori_judge_` and is shown only once. You can hold up to three live keys; all keys stop working on November 10, 2026.
 2. **Run the connector** (Node 22 or later):
 
    ```bash
@@ -40,7 +44,7 @@ A judge account holds up to three apps. Builds run on Orgenix's Muse account, so
    ```
 
 4. **Ask Muse Code for an app**, for example: *"Use Ori to build a booking app for my bike repair shop."* Muse Code calls Ori's `start_app_with_ori` tool. Ori keeps the idea for 30 minutes behind a one-time link and gives Muse Code that link. (If Muse Code asks you questions instead, say "call start_app_with_ori with this idea".)
-5. **Open the link** (click it yourself; Muse Code can't open it for you). Ori opens on alpha with your idea already in the conversation. Sign in with your judge account, and Ori's team takes it from there, on Muse, exactly as in *Try it*.
+5. **Open the link** (click it yourself; Muse Code can't open it for you). Ori opens on alpha with your idea already in the conversation. Sign in with your judge account, and Ori's team takes it from there, on Muse, exactly as on the web.
 
 Nothing is built and nothing is charged until you continue in Ori. The idea never goes into a URL, and a link works once. Each machine can hand Ori 30 ideas a day.
 
