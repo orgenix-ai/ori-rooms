@@ -16,6 +16,8 @@ A judge account holds up to three apps. Builds run on Orgenix's Muse account, so
 
 ## How Ori uses Muse
 
+More detail: [How Ori uses Muse, with code](docs/MUSE-INTEGRATION.md) and [Ori on Muse: what we measured](docs/ORI-ON-MUSE-RESULTS.md).
+
 ### One model choice per project
 
 Each project picks an AI provider; for judges, and for every new project, the default is **Meta (Muse)**. Ori's agents ask for a strength, not a model: light, medium or strong. On Meta those map to:
