@@ -106,7 +106,7 @@ This repo holds the parts of Ori that can be public:
    ```
 
    It listens at `http://localhost:8787/mcp`.
-3. **Add it to Muse Code (required).** **Muse Code only finds Ori if this entry is in** `~/.config/muse/settings.json`:
+3. **Add it to Muse Code.** In `~/.config/muse/settings.json`:
 
    ```json
    {
@@ -120,13 +120,6 @@ This repo holds the parts of Ori that can be public:
 5. **Open the link.** Ori opens on alpha with your idea already in the conversation. Sign in with your judge account, and Ori's team takes it from there, on Muse, exactly as in *Try it*.
 
 Nothing is built and nothing is charged until you continue in Ori. The idea never goes into a URL, and a link works once. Each machine can hand Ori 30 ideas a day.
-
-## Good to know
-
-> - A "Repair turn" line in the output means Ori's checks rejected a draft and redrew it. That's normal.
-> - Muse Code can't open the connector's link itself, so click it.
-> - The $20 allowance is per judge and shared across all your keys.
-> - Each CLI run uses about $0.14–0.23 of that allowance, and the cost line leaves out the guard's classifier calls.
 
 ## Licence
 
